@@ -6,6 +6,7 @@ library(dplyr)
 ## loan lenders
 loans_lenders = fread("kiva-kaggle/loans_lenders.csv", data.table = F)
 dim(loans_lenders)
+glimpse(loans_lenders)
 
 ## Problem 1 : Normalize the loan_id
 lenders = strsplit(loans_lenders[,2], ", ")
@@ -24,6 +25,8 @@ loans_lenders_norm = data.frame(loan_id = loan_id_norm, lender = lenders.all)
 
 loans = fread("kiva-kaggle/loans.csv", data.table = F)
 dim(loans)
+glimpse(loans)
+
 loans1 = loans[,c("loan_id", "disburse_time", "planned_expiration_time")]
 loans1$duration = with(loans1, seconds_to_period(planned_expiration_time - disburse_time))
 head(loans1)
@@ -101,3 +104,7 @@ loans_amount = merge(loans_lenders, loans3, all.x = T)
 ##assume that the true distribution among the countries is the same as the one
 ##computed from the rows where the country is known.
 
+lenders.only = fread("kiva-kaggle/lenders.csv")
+glimpse(lenders.only)
+
+sum(is.null(lenders.only$occupation))
